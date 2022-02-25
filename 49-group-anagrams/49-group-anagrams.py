@@ -6,4 +6,4 @@ class Solution:
         dict = collections.defaultdict(list)
         for word in strs:
             dict["".join(sorted(word))].append(word)
-        return dict.values()
+        return list(dict.values())
