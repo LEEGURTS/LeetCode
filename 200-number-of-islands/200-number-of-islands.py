@@ -1,19 +1,30 @@
 class Solution:
     def numIslands(self, grid: list[list[str]]) -> int:
-        def dfs(y, x):
-            grid[y][x] = "-1"
-            if y != 0 and grid[y - 1][x] == "1": #left
-                dfs(y - 1, x)
-            if y < len(grid)-1 and grid[y + 1][x]=="1":
-                dfs(y + 1, x)
-            if x != 0 and grid[y][x - 1]=="1":
-                dfs(y, x - 1)
-            if x < len(grid[0])-1 and grid[y][x + 1]=="1":
-                dfs(y, x + 1)
-        count = 0
+        def check(x,y):
+            if x < 0 or x >= len(grid):
+                return False
+            elif y < 0 or y >= len(grid[0]):
+                return False
+            return True
+        def dfs(x,y):
+            stack = []
+            stack.append((x,y))
+            while stack:
+                v = stack.pop()
+                if grid[v[0]][v[1]] is '1':
+                    grid[v[0]][v[1]] = 0
+                    if check(v[0]+1,v[1]):
+                        stack.append((v[0]+1,v[1]))
+                    if check(v[0],v[1]+1):
+                        stack.append((v[0],v[1]+1))
+                    if check(v[0]-1,v[1]):
+                        stack.append((v[0]-1,v[1]))
+                    if check(v[0],v[1]-1):
+                        stack.append((v[0],v[1]-1))
+        result = 0
         for i in range(len(grid)):
-            for j in range(len(grid[i])):
-                if grid[i][j] == "1":
+            for j in range(len(grid[0])):
+                if grid[i][j] == '1':
                     dfs(i, j)
-                    count += 1
-        return count
+                    result += 1
+        return result
