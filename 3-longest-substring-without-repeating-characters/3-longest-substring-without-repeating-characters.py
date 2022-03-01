@@ -1,11 +1,15 @@
 from collections import Counter
 
+
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        start = 0
-        last = 0
-        for char in s:
-            if Counter(s[start:last+1]).most_common(1)[0][1] > 1:
-                start += 1
-            last += 1
-        return last - start
+        used = {}
+        max_length = start = 0
+        for index, char in enumerate(s):
+            if char in used and start <= used[char]:
+                start = used[char] + 1
+            else:
+                max_length = max(max_length,index - start + 1)
+            
+            used[char] = index
+        return max_length
