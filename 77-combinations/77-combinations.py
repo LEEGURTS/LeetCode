@@ -1,18 +1,12 @@
 class Solution:
     def combine(self, n: int, k: int) -> list[list[int]]:
-        nums = list(range(1, n+1))
         result = []
-        temp = []
-
-        def dfs(fin: list[int], number: list[int]):
-            if len(fin) == k:
-                result.append(fin[:])
-                return
-            copy_list = number[:]
-            for i in range(len(number)):
-                fin.append(number[i])
-                copy_list.remove(number[i])
-                dfs(fin, copy_list)
-                fin.remove(number[i])
-        dfs(temp,nums)
+        nums = list(range(1,n+1))
+        def dfs(choose: list,start):
+            if len(choose) == k:
+                result.append(choose[:])
+            for i in range(start,n):
+                dfs(choose+[nums[i]],i+1)
+        dfs([],0)
         return result
+                
