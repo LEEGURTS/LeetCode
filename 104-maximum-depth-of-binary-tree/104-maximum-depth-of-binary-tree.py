@@ -13,10 +13,8 @@ class Solution:
             if not node:
                 return
             result.append(depth)
-            if node.left:
-                finddepth(node.left, depth+1)
-            if node.right:
-                finddepth(node.right, depth+1)
+            finddepth(node.left, depth+1)
+            finddepth(node.right, depth+1)
             
         finddepth(root,1)
         if len(result) == 0:
