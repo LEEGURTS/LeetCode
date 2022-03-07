@@ -1,3 +1,5 @@
+import collections
+
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -10,7 +12,13 @@ class TreeNode:
 
 class Solution:
     def invertTree(self, root: TreeNode):
-        if root:
-            root.left, root.right = self.invertTree(root.right),self.invertTree(root.left)
-            return root
-        return None
+        queue = collections.deque([root])
+
+        while queue:
+            node = queue.popleft()
+            if node:
+                node.left, node.right = node.right, node.left
+                
+                queue.append(node.left)
+                queue.append(node.right)
+        return root
